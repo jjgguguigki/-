@@ -7,15 +7,20 @@ import time
 
 # 全局缓存无头浏览器，避免重复创建
 @st.cache_resource
-def init_edge_driver():
-    from selenium.webdriver.edge.options import Options
-    edge_options = Options()
-    # 后台运行，不弹出浏览器窗口
-    edge_options.add_argument("--headless=new")
-    edge_options.add_argument("--no-sandbox")
-    edge_options.add_argument("--disable-dev-shm-usage")
-    edge_options.add_argument("--disable-gpu")
-    driver = webdriver.Edge(options=edge_options)
+def init_driver():
+    from selenium.webdriver.chrome.options import Options
+    from selenium.webdriver.chrome.service import Service
+    import subprocess, sys
+
+    chrome_opt = Options()
+    chrome_opt.add_argument("--headless=new")
+    chrome_opt.add_argument("--no-sandbox")
+    chrome_opt.add_argument("--disable-dev-shm-usage")
+    chrome_opt.add_argument("--disable-gpu")
+    chrome_opt.binary_location = subprocess.getoutput("which chromium-chromedriver")
+
+    service = Service()
+    driver = webdriver.Chrome(service=service, options=chrome_opt)
     return driver
 
 # ====================== 网页头部UI ======================
