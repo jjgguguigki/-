@@ -30,7 +30,7 @@ st.subheader("天空属于哈夫克 | 技术提供：银翼")
 st.divider()
 
 # 初始化浏览器
-driver = init_edge_driver()
+driver = init_driver()
 
 # 会话存储搜索结果
 if "search_data" not in st.session_state:
